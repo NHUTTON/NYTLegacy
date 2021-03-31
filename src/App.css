@@ -1,0 +1,14 @@
+body {
+    background-image: src('./assets/newyorktimes.png');
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+li {
+    color: white;
+}
+
+h3 {
+    color: white
+}

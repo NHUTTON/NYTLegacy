@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {ChangeEvent, Component, FormEvent} from 'react';
 import SearchDisplay from './SearchDisplay'
 
 type AcceptedProps ={
@@ -25,7 +25,16 @@ export default class Search extends Component<AcceptedProps, SearchState> {
             }
     } 
 
-    fetchResults = (e: any) => {
+    // componentDidUpdate() {
+    //     if (this.state.startDate || this.state.endDate !== null) {
+    //        this.setState({
+    //             startDate: this.state.startDate,
+    //             endDate: this.state.endDate
+    //        })
+    //     }
+    // }
+
+    fetchResults = (e: FormEvent) => {
         e.preventDefault()
         const baseUrl: string = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
         const key: string = "p1fuW2JiWK5eDK7grKTTTY79sysiQwKd"
@@ -39,6 +48,7 @@ export default class Search extends Component<AcceptedProps, SearchState> {
         if (this.state.endDate !== "") {
             url += '&end_date' + this.state.endDate
         }
+
         console.log(url)
         console.log(typeof(this.state.endDate))
 
@@ -50,27 +60,27 @@ export default class Search extends Component<AcceptedProps, SearchState> {
         })
     }
     
-    setResults(json:any) {
+    setResults(json: any) {
         this.setState({
             results: json.response.docs
         })
     }
 
-    searchFunction (e:any) {
+    searchFunction (e: ChangeEvent<HTMLInputElement>) {
         const input = e.target.value
         this.setState({
             searchTerm: input
     })
     }
 
-    startDateFunction(e:any) {
+    startDateFunction(e: ChangeEvent<HTMLInputElement>) {
         const input = e.target.value
         this.setState({
             startDate: input
         })
     }
 
-    endDateFunction(e:any) {
+    endDateFunction(e: ChangeEvent<HTMLInputElement>) {
         const input = e.target.value
         this.setState({
             endDate : input
@@ -83,14 +93,14 @@ export default class Search extends Component<AcceptedProps, SearchState> {
     //     })
     // }
 
-    nextPage = async (e:any) => {
+    nextPage = async (e: any) => {
             await this.setState({
                 pageNumber: (this.state.pageNumber +1)
             })
             this.fetchResults(e)
         }
 
-    previousPage =async (e:any) => {
+    previousPage =async (e: any) => {
         if (this.state.pageNumber > 0) {
             await this.setState({
                 pageNumber: (this.state.pageNumber - 1)
